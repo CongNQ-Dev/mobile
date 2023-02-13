@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">Facebook Application</string>
+    <string name="app_name">RecycleView</string>
+
+    <string-array name="feature_full_txt">
+        <item>Pharmacy</item>
+        <item>Baby</item>
+        <item>Cartwheel</item>
+        <item>Home</item>
+        <item>Pharmacy</item>
+        <item>Baby</item>
+        <item>Cartwheel</item>
+        <item>Home</item>
+    </string-array>
 </resources>

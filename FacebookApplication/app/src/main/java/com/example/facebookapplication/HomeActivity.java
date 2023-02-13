@@ -1,6 +1,8 @@
 package com.example.facebookapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,33 +11,45 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class HomeActivity extends AppCompatActivity implements RecyclerViewInterface {
+    ArrayList<featureModel> featureModels = new ArrayList<>();
+    int[] featureImages = {R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home,
+            R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //intent to get data
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("EMAIL");
-        String password = intent.getStringExtra("PASSWORD");
+        RecyclerView recyclerView = findViewById(R.id.mRecycleView);
 
-        //TextView
-        TextView mResultTv = findViewById(R.id.resultTv);
+        setUpFeatureModels();
 
-        //setText
-        mResultTv.setText("User Login with email: " + email + " and password: " + password);
+        featureAdapter adapter = new featureAdapter(this, featureModels, this);
 
-        Button mBackbtn = findViewById(R.id.btnBack);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mBackbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                Toast.makeText(HomeActivity.this,"Redirecting...",Toast.LENGTH_LONG).show();
-                startActivity(intent);
-            }
-        });
+
+    }
+
+    private void setUpFeatureModels(){
+        String[] featureName = getResources().getStringArray(R.array.feature_full_txt);
+
+        for (int i = 0; i < featureName.length; i++) {
+            featureModels.add(new featureModel(featureName[i], featureImages[i]));
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+
+        intent.putExtra("NAME",featureModels.get(position).getName());
+
+        startActivity(intent);
     }
 }
