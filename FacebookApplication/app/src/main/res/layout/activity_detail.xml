@@ -6,14 +6,63 @@
 
     tools:context=".DetailActivity">
 
-    <TextView
-        android:id="@+id/resultTv"
+    <LinearLayout
+        android:id="@+id/storeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="110dp" />
+        android:background="#ce102c"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/storeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="detail"
+            android:textAlignment="center"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="110dp" />
+
+        <ImageView
+            android:id="@+id/storeImage"
+            android:src="@drawable/ic_pharmacy"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+        </ImageView>
+        <LinearLayout
+            android:id="@+id/storePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="20dp"
+            android:background="#C30A25">
+
+            <TextView
+                android:id="@+id/storePhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19001299"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:layout_marginRight="20dp"
+                ></TextView>
+
+            <ImageView
+                android:id="@+id/storeCallButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_call"></ImageView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

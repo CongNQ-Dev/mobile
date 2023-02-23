@@ -5,9 +5,20 @@ public class featureModel {
     String name;
     int image;
 
-    public featureModel(String name, int image) {
+    String phoneNumber;
+
+    public featureModel(String name, int image, String phoneNumber) {
         this.name = name;
         this.image = image;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {

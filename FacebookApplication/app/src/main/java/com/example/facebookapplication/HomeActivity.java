@@ -18,6 +18,8 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewInter
     int[] featureImages = {R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home,
             R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home};
 
+    String[] featurePhoneNumber = {"19000001","19000002","19000003","19000004","19000001","19000002","19000003","19000004"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +34,13 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewInter
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     private void setUpFeatureModels(){
         String[] featureName = getResources().getStringArray(R.array.feature_full_txt);
 
         for (int i = 0; i < featureName.length; i++) {
-            featureModels.add(new featureModel(featureName[i], featureImages[i]));
+            featureModels.add(new featureModel(featureName[i], featureImages[i], featurePhoneNumber[i]));
         }
     }
 
@@ -49,6 +49,8 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewInter
         Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
 
         intent.putExtra("NAME",featureModels.get(position).getName());
+        intent.putExtra("IMAGE",featureModels.get(position).getImage());
+        intent.putExtra("PHONE",featureModels.get(position).getPhoneNumber());
 
         startActivity(intent);
     }
