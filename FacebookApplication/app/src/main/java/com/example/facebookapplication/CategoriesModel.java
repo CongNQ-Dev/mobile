@@ -1,13 +1,15 @@
 package com.example.facebookapplication;
 
-public class featureModel {
+import java.io.Serializable;
+
+public class CategoriesModel implements Serializable {
 
     String name;
     int image;
 
     String phoneNumber;
 
-    public featureModel(String name, int image, String phoneNumber) {
+    public CategoriesModel(String name, int image, String phoneNumber) {
         this.name = name;
         this.image = image;
         this.phoneNumber = phoneNumber;

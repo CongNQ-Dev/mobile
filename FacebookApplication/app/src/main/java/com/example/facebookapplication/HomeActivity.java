@@ -1,57 +1,94 @@
 package com.example.facebookapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-import java.util.ArrayList;
+import com.example.facebookapplication.fragment.ViewPagerAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity implements RecyclerViewInterface {
-    ArrayList<featureModel> featureModels = new ArrayList<>();
-    int[] featureImages = {R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home,
-            R.drawable.ic_pharmacy, R.drawable.ic_baby, R.drawable.ic_cart, R.drawable.ic_home};
+public class HomeActivity extends AppCompatActivity{
 
-    String[] featurePhoneNumber = {"19000001","19000002","19000003","19000004","19000001","19000002","19000003","19000004"};
-
+    private ViewPager viewPager;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        RecyclerView recyclerView = findViewById(R.id.mRecycleView);
+        viewPager = findViewById(R.id.view_pager);
+        bottomNavigationView = findViewById(R.id.home_navbar);
 
-        setUpFeatureModels();
+        ImageView productManagerButton = findViewById(R.id.product_management);
 
-        featureAdapter adapter = new featureAdapter(this, featureModels, this);
+        productManagerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProductManagement.class);
+                startActivity(intent);
+            }
+        });
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(adapter);
+
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        bottomNavigationView.getMenu().findItem(R.id.menu_featured).setChecked(true);
+                        break;
+                    case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.menu_deals).setChecked(true);
+                        break;
+                    default:
+                        bottomNavigationView.getMenu().findItem(R.id.menu_categories).setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_featured:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.menu_deals:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.menu_categories:
+                        viewPager.setCurrentItem(2);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
-    private void setUpFeatureModels(){
-        String[] featureName = getResources().getStringArray(R.array.feature_full_txt);
-
-        for (int i = 0; i < featureName.length; i++) {
-            featureModels.add(new featureModel(featureName[i], featureImages[i], featurePhoneNumber[i]));
-        }
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
-
-        intent.putExtra("NAME",featureModels.get(position).getName());
-        intent.putExtra("IMAGE",featureModels.get(position).getImage());
-        intent.putExtra("PHONE",featureModels.get(position).getPhoneNumber());
-
-        startActivity(intent);
-    }
 }
